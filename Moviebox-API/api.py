@@ -592,7 +592,6 @@ async def get_stream_sources(subject_id: str, detail_path: str, se: int = 1, ep:
         "note": None if has_resource else "No stream found for this episode.",
     }
 
-
 @app.get("/api/stream-diagnose/{subject_id}")
 async def diagnose_stream_sources(
     subject_id: str,
@@ -635,8 +634,10 @@ async def diagnose_stream_sources(
             )
 
         results = []
+
         for index, source in enumerate(play_data.get("streams", [])):
             url = source.get("url")
+
             if not url:
                 continue
 
@@ -653,17 +654,34 @@ async def diagnose_stream_sources(
                 "redirected_url": None,
                 "playable_response": False,
                 "error": None,
+
+                # Additional diagnostic information
+                "request_headers": {},
+                "response_headers": {},
+                "response_body": None,
             }
 
             try:
                 media_headers = {
                     "User-Agent": DEFAULT_HEADERS["User-Agent"],
                     "Accept": "video/mp4,video/*;q=0.9,*/*;q=0.8",
+                    "Accept-Encoding": "identity",
                     "Range": "bytes=0-1023",
                     "Referer": player_referer,
                     "Origin": "https://moviebox.ph",
                 }
-                media_resp = await client.get(url, headers=media_headers)
+
+                media_resp = await client.get(
+                    url,
+                    headers=media_headers,
+                )
+
+                response_body = None
+
+                # Only read the response body when the upstream request
+                # fails. This helps us understand the 426 response.
+                if media_resp.status_code not in (200, 206):
+                    response_body = media_resp.text[:500]
 
                 result.update({
                     "status": media_resp.status_code,
@@ -671,6 +689,7 @@ async def diagnose_stream_sources(
                     "content_range": media_resp.headers.get("content-range"),
                     "content_length": media_resp.headers.get("content-length"),
                     "redirected_url": str(media_resp.url),
+
                     "playable_response": (
                         media_resp.status_code in (200, 206)
                         and media_resp.headers.get("content-type", "")
@@ -678,7 +697,33 @@ async def diagnose_stream_sources(
                         .split(";")[0]
                         in {"video/mp4", "application/mp4"}
                     ),
+
+                    "request_headers": {
+                        "User-Agent": media_headers.get("User-Agent"),
+                        "Accept": media_headers.get("Accept"),
+                        "Accept-Encoding": media_headers.get("Accept-Encoding"),
+                        "Range": media_headers.get("Range"),
+                        "Referer": media_headers.get("Referer"),
+                        "Origin": media_headers.get("Origin"),
+                    },
+
+                    "response_headers": {
+                        "server": media_resp.headers.get("server"),
+                        "content-type": media_resp.headers.get("content-type"),
+                        "content-range": media_resp.headers.get("content-range"),
+                        "content-length": media_resp.headers.get("content-length"),
+                        "accept-ranges": media_resp.headers.get("accept-ranges"),
+                        "location": media_resp.headers.get("location"),
+                        "upgrade": media_resp.headers.get("upgrade"),
+                        "via": media_resp.headers.get("via"),
+                        "cf-ray": media_resp.headers.get("cf-ray"),
+                        "connection": media_resp.headers.get("connection"),
+                        "date": media_resp.headers.get("date"),
+                    },
+
+                    "response_body": response_body,
                 })
+
             except Exception as exc:
                 result["error"] = str(exc)
 
