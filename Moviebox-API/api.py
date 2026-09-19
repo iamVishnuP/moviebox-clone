@@ -663,13 +663,11 @@ async def diagnose_stream_sources(
 
             try:
                 media_headers = {
-                    "User-Agent": DEFAULT_HEADERS["User-Agent"],
-                    "Accept": "video/mp4,video/*;q=0.9,*/*;q=0.8",
-                    "Accept-Encoding": "identity",
-                    "Range": "bytes=0-1023",
-                    "Referer": player_referer,
-                    "Origin": "https://moviebox.ph",
-                }
+    "User-Agent": DEFAULT_HEADERS["User-Agent"],
+    "Accept": "video/mp4,video/*;q=0.9,*/*;q=0.8",
+    "Accept-Encoding": "identity",
+    "Range": "bytes=0-1023",
+            }
 
                 media_resp = await client.get(
                     url,
