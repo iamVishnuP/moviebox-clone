@@ -1,0 +1,376 @@
+.history-page {
+    min-height: calc(100vh - 70px);
+    background: #0b0b0f;
+    color: #fff;
+}
+
+.history-container {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 56px 0 80px;
+}
+
+.history-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.history-header h1 {
+    margin: 7px 0 8px;
+    font-size: clamp(30px, 4vw, 42px);
+}
+
+.history-header p {
+    color: #888;
+    font-size: 15px;
+}
+
+.history-clear-button,
+.history-tab,
+.history-remove-button {
+    font: inherit;
+}
+
+.history-clear-button {
+    padding: 10px 16px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #15151c;
+    color: #bbb;
+    cursor: pointer;
+}
+
+.history-clear-button:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.history-tabs {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    border-bottom: 1px solid #24242c;
+    margin-bottom: 28px;
+}
+
+.history-tab {
+    flex: 0 0 auto;
+    padding: 12px 15px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+}
+
+.history-tab:hover,
+.history-tab.active {
+    color: #fff;
+}
+
+.history-tab.active {
+    border-bottom-color: #e50914;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.history-item {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    background: #15151c;
+    border: 1px solid #24242c;
+    border-radius: 12px;
+}
+
+.history-item:hover {
+    border-color: #3a3a46;
+}
+
+.history-poster-link {
+    position: relative;
+    display: block;
+    width: 120px;
+    height: 170px;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #0f0f14;
+}
+
+.history-poster-link img,
+.history-poster-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.history-poster-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 30px;
+}
+
+.history-poster-play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 24px;
+}
+
+.history-poster-link:hover .history-poster-play,
+.history-poster-link:focus-visible .history-poster-play {
+    opacity: 1;
+}
+
+.history-item-info {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.history-item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.history-title-wrap {
+    min-width: 0;
+}
+
+.history-title {
+    display: block;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.history-title:hover {
+    color: #e50914;
+}
+
+.history-episode {
+    margin-top: 6px;
+    color: #888;
+    font-size: 13px;
+}
+
+.history-remove-button {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    border: 1px solid #333;
+    border-radius: 50%;
+    background: transparent;
+    color: #777;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.history-remove-button:hover {
+    color: #fff;
+    border-color: #666;
+}
+
+.history-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.history-progress-track {
+    width: min(520px, 100%);
+    height: 5px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #303039;
+}
+
+.history-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: #e50914;
+}
+
+.history-progress-row span {
+    min-width: 88px;
+    color: #999;
+    font-size: 12px;
+}
+
+.history-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 12px;
+    color: #666;
+    font-size: 12px;
+}
+
+.history-watch-button,
+.history-browse-button {
+    align-self: flex-start;
+    margin-top: 18px;
+    padding: 9px 15px;
+    border-radius: 7px;
+    background: #e50914;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.history-watch-button:hover,
+.history-browse-button:hover {
+    background: #f6121d;
+}
+
+.history-empty {
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #777;
+}
+
+.history-empty-icon {
+    width: 70px;
+    height: 70px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    font-size: 30px;
+}
+
+.history-empty h2 {
+    margin-bottom: 8px;
+    color: #fff;
+    font-size: 22px;
+}
+
+.history-empty p {
+    margin-bottom: 22px;
+    font-size: 14px;
+}
+
+@media (max-width: 650px) {
+    .history-container {
+        width: min(100% - 28px, 1200px);
+        padding: 34px 0 55px;
+    }
+
+    .history-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .history-clear-button {
+        width: 100%;
+    }
+
+    .history-item {
+        gap: 12px;
+        padding: 10px;
+    }
+
+    .history-poster-link {
+        width: 86px;
+        height: 124px;
+    }
+
+    .history-title {
+        font-size: 16px;
+    }
+
+    .history-progress-row {
+        display: block;
+        margin-top: 14px;
+    }
+
+    .history-progress-track {
+        width: 100%;
+        margin-bottom: 6px;
+    }
+
+    .history-meta {
+        display: none;
+    }
+
+    .history-watch-button {
+        margin-top: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .history-container {
+        width: min(100% - 24px, 1200px);
+    }
+
+    .history-tabs {
+        margin-left: -12px;
+        margin-right: -12px;
+        padding: 0 12px;
+    }
+
+    .history-item {
+        display: grid;
+        grid-template-columns: 78px minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .history-poster-link {
+        width: 78px;
+        height: 116px;
+    }
+
+    .history-item-top {
+        align-items: flex-start;
+    }
+
+    .history-remove-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .history-title {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .history-watch-button,
+    .history-browse-button {
+        width: 100%;
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
